@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dragon's Ladder — Realm of Fortune</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═════ SCREEN 1: TITLE / PLAYER COUNT ═════ -->
+<section id="screen-title" class="screen active">
+  <div class="title-bg"></div>
+  <div class="title-content">
+    <span class="ornament">✦ ✦ ✦</span>
+    <h1>Dragon's Ladder</h1>
+    <h2>Realm of Fortune</h2>
+    <p class="tagline">
+      A fantasy snakes-and-ladders adventure of fortune, fate, and bold gambles.
+    </p>
+
+    <div class="player-count">
+      <h3>เลือกจำนวนผู้เล่น</h3>
+      <div class="count-buttons">
+        <button class="count-btn" data-count="2">2</button>
+        <button class="count-btn" data-count="3">3</button>
+        <button class="count-btn" data-count="4">4</button>
+      </div>
+    </div>
+
+    <p class="hint">⚀ เกมนี้ใช้ลูกเต๋า D6 จริง 1 ลูก กรุณาเตรียมไว้</p>
+  </div>
+</section>
+
+<!-- ═════ SCREEN 2: CHARACTER SELECT ═════ -->
+<section id="screen-select" class="screen">
+  <div class="select-header">
+    <h2>เลือกตัวละคร</h2>
+    <p>ผู้เล่น <span id="select-player-num">1</span> / <span id="select-player-total">2</span></p>
+  </div>
+
+  <div id="char-grid" class="char-select-grid">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="select-footer">
+    <button id="confirm-char" class="btn-primary" disabled>ยืนยันตัวละคร</button>
+  </div>
+</section>
+
+<!-- ═════ SCREEN 3: BOARD / GAME ═════ -->
+<section id="screen-game" class="screen">
+  <div class="game-layout">
+
+    <aside class="players-panel" id="players-panel">
+      <!-- player cards rendered here -->
+    </aside>
+
+    <div class="board-wrap">
+      <div class="board-frame">
+        <div id="board" class="board"></div>
+      </div>
+
+      <div class="turn-bar">
+        <div class="turn-info">
+          <span class="turn-label">เทิร์นของ</span>
+          <span class="turn-name" id="turn-name">—</span>
+        </div>
+        <div class="dice-input">
+          <label>ทอด D6 จริง แล้วป้อนผล:</label>
+          <div class="dice-buttons">
+            <button class="dice-btn" data-roll="1">1</button>
+            <button class="dice-btn" data-roll="2">2</button>
+            <button class="dice-btn" data-roll="3">3</button>
+            <button class="dice-btn" data-roll="4">4</button>
+            <button class="dice-btn" data-roll="5">5</button>
+            <button class="dice-btn" data-roll="6">6</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═════ MODAL: EVENT / DUEL / ABILITY ═════ -->
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-icon" id="modal-icon">⚡</span>
+      <h3 id="modal-title">Event</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- content -->
+    </div>
+    <div class="modal-actions" id="modal-actions">
+      <!-- buttons -->
+    </div>
+  </div>
+</div>
+
+<!-- ═════ LOG ═════ -->
+<div id="log-toggle" class="log-toggle">📜</div>
+<div id="log-panel" class="log-panel">
+  <div class="log-header">
+    <h4>บันทึกเหตุการณ์</h4>
+    <button id="log-close">✕</button>
+  </div>
+  <div id="log-body" class="log-body"></div>
+</div>
+
+<!-- ═════ VICTORY ═════ -->
+<section id="screen-victory" class="screen">
+  <div class="victory-content">
+    <span class="ornament">✦ ✦ ✦</span>
+    <h1 id="victory-name">ผู้เล่น 1</h1>
+    <h2>คือผู้ครองอาณาจักร!</h2>
+    <p class="tagline">Realm of Fortune หมอบกราบบุคคลผู้กล้าหาญ</p>
+    <button class="btn-primary" id="play-again">เล่นใหม่</button>
+  </div>
+</section>
+
+<script src="data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
