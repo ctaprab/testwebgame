@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dragon's Ladder — Realm of Fortune</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<!-- ============ CHARACTER SELECT ============ -->
+<div id="screen-select" class="screen active">
+  <div class="select-frame">
+    <div class="select-header">
+      <span class="ornament">✦ ✦ ✦</span>
+      <h1>Dragon's Ladder</h1>
+      <h2>Realm of Fortune</h2>
+    </div>
+
+    <div class="select-meta">
+      <label>Players:
+        <span class="count-ctrl">
+          <button data-count="-">−</button>
+          <span id="player-count">2</span>
+          <button data-count="+">+</button>
+        </span>
+      </label>
+      <span class="hint">Tap a hero to assign to the next player slot. Tap again to clear.</span>
+    </div>
+
+    <div class="char-grid" id="char-grid"></div>
+
+    <div class="select-roster" id="select-roster"></div>
+
+    <button id="start-game" class="btn-primary" disabled>Begin the Ascent ⚔</button>
+  </div>
+</div>
+
+<!-- ============ GAME ============ -->
+<div id="screen-game" class="screen">
+
+  <div class="game-layout">
+
+    <!-- BOARD -->
+    <div class="board-wrap">
+      <div class="board-frame">
+        <div class="board" id="board"></div>
+        <svg class="board-overlay" id="overlay" viewBox="0 0 1000 1000" preserveAspectRatio="none"></svg>
+        <div class="tokens" id="tokens"></div>
+      </div>
+      <div class="board-legend-row">
+        <div class="lg"><span class="dot" style="background:#C8A14A;"></span>Plains</div>
+        <div class="lg"><span class="dot" style="background:#4A7C2A;"></span>Forest</div>
+        <div class="lg"><span class="dot" style="background:#9B2626;"></span>Peak</div>
+        <div class="lg"><span class="dot" style="background:#5C4A9C;"></span>Sky</div>
+        <div class="lg lg-sym"><span class="sym">⚡</span>Fortune</div>
+        <div class="lg lg-sym"><span class="sym">💀</span>Curse</div>
+        <div class="lg lg-sym"><span class="sym">🎲</span>Gamble</div>
+        <div class="lg lg-sym"><span class="sym">⚔</span>Duel</div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="side">
+
+      <div class="active-player" id="active-player"></div>
+
+      <button class="btn-info" id="info-btn" title="Rules & Reference">
+        <span class="info-icon">ⓘ</span> Rules &amp; Reference
+      </button>
+
+      <div class="dice-block">
+        <div class="dice" id="dice">
+          <div class="dice-face" id="dice-face">?</div>
+        </div>
+        <button class="btn-primary" id="roll-btn">Roll D6</button>
+        <button class="btn-ghost" id="reroll-btn" disabled>Re-roll (WIT)</button>
+      </div>
+
+      <div class="ability-block" id="ability-block"></div>
+
+      <div class="roster" id="roster"></div>
+
+      <div class="log-wrap">
+        <h4>Chronicle</h4>
+        <div class="log" id="log"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============ EVENT MODAL ============ -->
+<div class="modal-shade" id="modal-shade">
+  <div class="modal" id="modal">
+    <div class="modal-banner" id="modal-banner">EVENT</div>
+    <h3 id="modal-title">Event</h3>
+    <p id="modal-body">…</p>
+    <div class="modal-extra" id="modal-extra"></div>
+    <div class="modal-buttons" id="modal-buttons"></div>
+  </div>
+</div>
+
+<!-- ============ VICTORY ============ -->
+<div class="modal-shade" id="victory-shade">
+  <canvas id="confetti"></canvas>
+  <div class="modal victory">
+    <div class="victory-rays"></div>
+    <div class="victory-crown">👑</div>
+    <div class="victory-portrait">
+      <img id="victory-sprite" alt="">
+      <div class="victory-pedestal"></div>
+    </div>
+    <div class="victory-label">CHAMPION OF THE SKY TEMPLE</div>
+    <h3 id="victory-name">Victor</h3>
+    <p id="victory-title" class="victory-title">…</p>
+    <p id="victory-sub" class="victory-sub">claims the dragon's blessing.</p>
+
+    <div class="victory-stats" id="victory-stats"></div>
+
+    <div class="victory-buttons">
+      <button class="btn-primary" id="new-game-btn">⚔ New Game</button>
+      <button class="btn-ghost" id="rematch-btn">↻ Rematch (same heroes)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INFO MODAL ============ -->
+<div class="modal-shade" id="info-shade">
+  <div class="modal info-modal">
+    <button class="modal-close" id="info-close">✕</button>
+    <div class="info-tabs">
+      <button class="tab-btn active" data-tab="rules">📜 Rules</button>
+      <button class="tab-btn" data-tab="heroes">⚔ Heroes</button>
+      <button class="tab-btn" data-tab="events">⚡ Events</button>
+      <button class="tab-btn" data-tab="board">🗺 Board</button>
+    </div>
+    <div class="info-body" id="info-body"></div>
+  </div>
+</div>
+
+<!-- ============ CELL INFO MODAL ============ -->
+<div class="modal-shade" id="cell-shade">
+  <div class="modal cell-modal">
+    <button class="modal-close" id="cell-close">✕</button>
+    <div id="cell-body"></div>
+  </div>
+</div>
+
+<!-- ============ CHARACTER SHEET MODAL ============ -->
+<div class="modal-shade" id="sheet-shade">
+  <div class="modal sheet-modal">
+    <button class="modal-close" id="sheet-close">✕</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
